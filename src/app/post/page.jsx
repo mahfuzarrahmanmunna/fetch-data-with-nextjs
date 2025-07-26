@@ -11,7 +11,7 @@ const PostPage = async () => {
     return (
         <div className='space-y-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
             {posts.map(singlePost => {
-                return <div className='border py-2 px-3 rounded shadow-2xl'>
+                return <div key={singlePost.id} className='border py-2 px-3 rounded shadow-2xl'>
                     <h3 className='mb-2 text-2xl font-medium'>
                         {singlePost.title}
                     </h3>

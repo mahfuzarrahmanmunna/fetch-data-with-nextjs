@@ -15,7 +15,7 @@ const Navbar = () => {
     const toggleMenu = () => setMenuOpen(!menuOpen);
 
     return (
-        <nav className="bg-white shadow-md sticky top-0 z-50">
+        <nav className="bg-gray-900 shadow-md sticky top-0 z-50">
             <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
                 {/* Logo */}
                 <Link href="/" className="text-2xl font-bold text-blue-600">
@@ -23,7 +23,7 @@ const Navbar = () => {
                 </Link>
 
                 {/* Desktop Menu */}
-                <ul className="hidden md:flex space-x-6 text-gray-700 font-medium">
+                <ul className="hidden md:flex space-x-6 text-gray-200 font-medium">
                     {navLinks.map((link) => (
                         <li key={link.name}>
                             <Link href={link.path} className="hover:text-blue-600 transition">
@@ -42,7 +42,7 @@ const Navbar = () => {
                     >
                         {/* SVG Icon */}
                         <svg
-                            className="w-6 h-6 text-gray-800"
+                            className="w-6 h-6 text-gray-200"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -70,8 +70,8 @@ const Navbar = () => {
 
             {/* Mobile Dropdown */}
             {menuOpen && (
-                <div className="md:hidden bg-white shadow-md px-4 pb-4">
-                    <ul className="space-y-2 text-gray-700 font-medium">
+                <div className="md:hidden bg-gray-950 shadow-md px-4 pb-4">
+                    <ul className="space-y-2 text-gray-200 mx-6 font-medium">
                         {navLinks.map((link) => (
                             <li key={link.name}>
                                 <Link
