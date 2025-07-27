@@ -1,6 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import MealSearchInput from "./components/MealSearchInput";
+import { Roboto } from "next/font/google";
+
+const roboto = Roboto({
+    weight: ['400', '700']
+})
+
 
 export const metadata = {
     title: "All Meals",
@@ -8,7 +14,7 @@ export const metadata = {
 };
 
 const MealsPage = async ({ searchParams }) => {
-    const query = searchParams?.search || "";
+    const query = await searchParams?.search || "";
 
     const res = await fetch(
         `https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`
@@ -29,7 +35,7 @@ const MealsPage = async ({ searchParams }) => {
                             key={meal.idMeal}
                             className="border border-gray-200 p-4 rounded-xl shadow hover:shadow-lg transition"
                         >
-                            <Link href={`/meals/${meal.idMeal}`} className="block">
+                            <Link href={`/meals/${meal.idMeal}`} className={`block ${roboto.className}`}>
                                 <Image
                                     src={meal.strMealThumb}
                                     alt={meal.strMeal}
