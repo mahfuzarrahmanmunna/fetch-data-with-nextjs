@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import MealSearchInput from "./components/MealSearchInput";
 
 export const metadata = {
@@ -7,21 +8,13 @@ export const metadata = {
 };
 
 const MealsPage = async ({ searchParams }) => {
-    const query = await searchParams;
+    const query = searchParams?.search || "";
 
-    const fetchMeals = async () => {
-        try {
-            const res = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${query.search}`);
-            const data = await res.json();
-            return data?.meals || [];
-        } catch (error) {
-            console.error("Failed to fetch meals:", error);
-            return [];
-        }
-    };
-
-    const meals = await fetchMeals();
-    console.log(meals);
+    const res = await fetch(
+        `https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`
+    );
+    const data = await res.json();
+    const meals = data?.meals || [];
 
     return (
         <div className="p-4">
@@ -29,24 +22,35 @@ const MealsPage = async ({ searchParams }) => {
                 <MealSearchInput />
             </div>
 
-            {meals?.length > 0 ? (
+            {meals.length > 0 ? (
                 <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                     {meals.map((meal) => (
-                        <li key={meal.idMeal} className="border border-gray-200 p-4 rounded-xl shadow hover:shadow-lg transition">
+                        <li
+                            key={meal.idMeal}
+                            className="border border-gray-200 p-4 rounded-xl shadow hover:shadow-lg transition"
+                        >
                             <Link href={`/meals/${meal.idMeal}`} className="block">
-                                <img
+                                <Image
                                     src={meal.strMealThumb}
                                     alt={meal.strMeal}
+                                    width={400}
+                                    height={300}
                                     className="w-full h-48 object-cover rounded mb-4"
                                 />
-                                <h3 className="text-lg font-semibold text-blue-700">{meal.strMeal}</h3>
-                                <p className="text-sm text-gray-600">{meal.strArea} - {meal.strCategory}</p>
+                                <h3 className="text-lg font-semibold text-blue-700">
+                                    {meal.strMeal}
+                                </h3>
+                                <p className="text-sm text-gray-600">
+                                    {meal.strArea} - {meal.strCategory}
+                                </p>
                             </Link>
                         </li>
                     ))}
                 </ul>
             ) : (
-                <p className="text-center text-red-500 font-medium text-lg mt-10">No meals found for "{query.search}"</p>
+                <p className="text-center text-red-500 font-medium text-lg mt-10">
+                    No meals found for "{query}"
+                </p>
             )}
         </div>
     );
