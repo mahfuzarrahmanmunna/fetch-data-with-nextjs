@@ -1,16 +1,32 @@
-// export const dynamic = 'force-static'
+import { dbConnect } from "@/lib/dbConnect";
+import { NextResponse } from "next/server";
 
 export async function GET() {
-    const data = {
-        message: "Successfully ge data",
+    const response = {
+        message: "Successfully fetched data",
         error: false,
-        status: 200
-    }
-    return Response.json({ data })
+        status: 200,
+    };
+    return Response.json(response);
 }
 
 export async function POST(req) {
-    const postedData = await req.json()
-
-    return Response.json({ postedData })
+    try {
+        const postedData = await req.json();
+        console.log(postedData);
+        const collection = await dbConnect("first_data");
+        const result = await collection.insertOne(postedData);
+        console.log(result);
+        return NextResponse.json({
+            insertedId: result.insertedId,
+            acknowledged: result.acknowledged,
+            status: 201,
+        });
+    } catch (error) {
+        console.error("Error inserting data:", error);
+        return Response.json(
+            { message: "Failed to insert data", error: true, status: 500 },
+            { status: 500 }
+        );
+    }
 }
