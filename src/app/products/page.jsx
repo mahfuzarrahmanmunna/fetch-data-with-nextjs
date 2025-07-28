@@ -1,14 +1,47 @@
-import React from 'react';
+'use client'
 
-const ProductsPage = async () => {
-    const res = await fetch('http://localhost:3000/api/items');
-    const data = await res.json();
+import React, { useEffect, useState } from 'react';
+
+const ProductsPage = () => {
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            const res = await fetch('http://localhost:3000/api/items');
+            const data = await res.json();
+            setProducts(data);
+        };
+        fetchProducts();
+    }, []);
+
+    const handleDelete = async (id) => {
+        console.log("Deleting product:", id);
+        try {
+            await fetch(`http://localhost:3000/api/items/${id}`, {
+                method: 'DELETE',
+            });
+            setProducts(prev => prev.filter(p => p._id !== id));
+        } catch (error) {
+            console.error('Failed to delete:', error);
+        }
+    };
+
     return (
         <div>
-            Products Page
-            <p>
-                {JSON.stringify(data)}
-            </p>
+            <h1>Products Page</h1>
+            <ul>
+                {products.map(item => (
+                    <li key={item._id}>
+                        {item.productName}
+                        <button
+                            onClick={() => handleDelete(item._id)}
+                            className='ms-10 mx-2 my-1 bg-gray-800 px-4 rounded active:bg-gray-400 active:text-gray-900 cursor-pointer'
+                        >
+                            x
+                        </button>
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 };
