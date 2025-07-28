@@ -7,6 +7,17 @@ const nextConfig = {
             }
         ],
     },
+    // async redirects() {
+    //     return [
+    //         // Basic redirect
+    //         // {
+    //         //     source: '/products/add',
+    //         //     destination: '/dashboard/products',
+    //         //     permanent: true,
+    //         // },
+
+    //     ]
+    // },
 }
 
 

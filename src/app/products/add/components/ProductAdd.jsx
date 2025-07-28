@@ -1,7 +1,9 @@
 'use client';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
 const ProductAdd = () => {
+    const router = useRouter()
     const handleSubmit = async (e) => {
         e.preventDefault();
         const form = e.target;
@@ -21,8 +23,9 @@ const ProductAdd = () => {
             console.log(result);
 
             if (res.ok) {
-                alert("Product added successfully!");
+                // alert("Product added successfully!");
                 form.reset(); // clear the input field
+                router.push('/products')
             } else {
                 alert("Failed to add product.");
             }
