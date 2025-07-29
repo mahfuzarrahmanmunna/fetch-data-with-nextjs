@@ -2,12 +2,14 @@
 
 import React, { useEffect, useState } from 'react';
 
+// export const dynamic = "force-dynamic"
+
 const ProductsPage = () => {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
         const fetchProducts = async () => {
-            const res = await fetch('http://localhost:3000/api/items');
+            const res = await fetch('https://nextjs-data-fetching-wine.vercel.app/api/items');
             const data = await res.json();
             setProducts(data);
         };
@@ -17,7 +19,7 @@ const ProductsPage = () => {
     const handleDelete = async (id) => {
         console.log("Deleting product:", id);
         try {
-            await fetch(`http://localhost:3000/api/items/${id}`, {
+            await fetch(`https://nextjs-data-fetching-wine.vercel.app/api/items/${id}`, {
                 method: 'DELETE',
             });
             setProducts(prev => prev.filter(p => p._id !== id));

@@ -11,7 +11,7 @@ const ProductAdd = () => {
         const payload = { productName };
 
         try {
-            const res = await fetch('http://localhost:3000/api/items', {
+            const res = await fetch('https://nextjs-data-fetching-wine.vercel.app/api/items', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -23,8 +23,7 @@ const ProductAdd = () => {
             console.log(result);
 
             if (res.ok) {
-                // alert("Product added successfully!");
-                form.reset(); // clear the input field
+                form.reset();
                 router.push('/products')
             } else {
                 alert("Failed to add product.");
